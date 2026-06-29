@@ -3,7 +3,7 @@ class Wifiqr < Formula
   homepage "https://github.com/shint-mcguff/wifiqr"
   url "https://github.com/shint-mcguff/wifiqr/releases/download/v0.2.1/wifiqr-v0.2.1-universal-macos.tar.gz"
   # Filled in after the v0.2.1 release asset is built by CI.
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "b4050e3af267aa786e7135e332dba0ac204e659f2fc28e059f519020e66842c9"
   license "MIT"
   version "0.2.1"
 
