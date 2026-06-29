@@ -49,7 +49,20 @@ wifiqr "Cafe Guest"             # QR for a saved network by name
 wifiqr "Cafe Guest" -p latte    # supply the password directly (no keychain)
 wifiqr "Open Hotspot" --open    # passwordless network
 wifiqr --no-qr                  # print just the WIFI: connection string
+wifiqr --menu                   # run as a menu bar app (see below)
 ```
+
+### Menu bar
+
+```sh
+wifiqr --menu
+```
+
+A 📶 icon appears in the menu bar. Click it and a popover shows a scannable QR
+for whatever network you're currently on — hand your screen to a guest and
+they're connected in a tap. **Refresh** rebuilds it after you switch networks.
+To keep it running, add `wifiqr --menu` as a Login Item in **System Settings →
+General → Login Items**.
 
 When you don't pass `--password`, `wifiqr` reads the saved password from your
 keychain. macOS guards Wi-Fi passwords, so the first lookup each session shows a

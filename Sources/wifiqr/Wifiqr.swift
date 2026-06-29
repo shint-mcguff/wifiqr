@@ -6,8 +6,11 @@ struct Wifiqr: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "wifiqr",
         abstract: "Show a QR code that joins a Wi-Fi network — scan it to connect, no password typing.",
-        version: "0.1.0"
+        version: "0.2.0"
     )
+
+    @Flag(name: .long, help: "Run as a menu bar app: click the icon to show the current network's QR.")
+    var menu = false
 
     @Argument(help: "Network name. Defaults to the network you're currently on.")
     var ssid: String?
@@ -22,6 +25,10 @@ struct Wifiqr: ParsableCommand {
     var noQR = false
 
     func run() throws {
+        if menu {
+            MenuBar.run()  // never returns
+        }
+
         guard let network = ssid ?? WiFi.currentSSID(), !network.isEmpty else {
             throw RuntimeError("Couldn't determine the current Wi-Fi network. Pass one explicitly: wifiqr \"My Network\"")
         }
