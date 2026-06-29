@@ -1,0 +1,34 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select latest Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build release binary
+        run: swift build -c release --arch arm64 --arch x86_64
+
+      - name: Package
+        run: |
+          tar -czf wifiqr-${{ github.ref_name }}-universal-macos.tar.gz \
+            -C .build/apple/Products/Release wifiqr
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wifiqr-*-universal-macos.tar.gz
+          generate_release_notes: true
