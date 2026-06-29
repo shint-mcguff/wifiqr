@@ -6,10 +6,11 @@ struct Wifiqr: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "wifiqr",
         abstract: "Show a QR code that joins a Wi-Fi network — scan it to connect, no password typing.",
-        version: "0.2.0"
+        discussion: "Run with no arguments to launch the menu bar app. Pass a network name or any flag to use it from the command line.",
+        version: "0.2.1"
     )
 
-    @Flag(name: .long, help: "Run as a menu bar app: click the icon to show the current network's QR.")
+    @Flag(name: .long, help: "Run as a menu bar app (this is also the default with no arguments).")
     var menu = false
 
     @Argument(help: "Network name. Defaults to the network you're currently on.")
@@ -25,7 +26,9 @@ struct Wifiqr: ParsableCommand {
     var noQR = false
 
     func run() throws {
-        if menu {
+        // No arguments at all → menu bar, matching the other menu bar tools.
+        let bare = ssid == nil && password == nil && !open && !noQR
+        if menu || bare {
             MenuBar.run()  // never returns
         }
 
